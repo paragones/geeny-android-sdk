@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.geeny.sample.ui.main.clients.ble.list.view.BleClientListRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="0dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical"
+    app:cardBackgroundColor="#FFFFFF"
+    app:contentPadding="16dp">
+
+
+    <ImageView
+        android:id="@+id/imageViewLogo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/geeny" />
+
+    <TextView
+        android:id="@+id/textViewConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic"
+        android:textSize="9dp"
+        android:textColor="@color/primary_text_color"
+        android:layout_gravity="end|top" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="32dp">
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:ellipsize="marquee"
+            android:textColor="@color/primary_text_color"
+            android:textStyle="bold" />
+
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textColor="@color/primary_text_color"
+            android:textSize="14dp" />
+
+
+        <TextView
+            android:id="@+id/textViewType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="marquee"
+            android:textColor="@color/primary_text_color"
+            android:textSize="14dp" />
+
+    </LinearLayout>
+</io.geeny.sample.ui.main.clients.ble.list.view.BleClientListRow>

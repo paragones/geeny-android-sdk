@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.leondroid.demo_app.ui.main.things.ThingsRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
+
+
+    <ImageView
+        android:id="@+id/imageViewGeenyLogo"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical|right"
+        android:layout_marginRight="32dp"
+        android:src="@drawable/geeny"/>
+
+    <ImageView
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_gravity="center_vertical|right"
+        android:src="@drawable/chevron_right"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginRight="64dp"
+        android:layout_marginBottom="8dp">
+
+        <TextView
+            android:id="@+id/textViewThingsRowTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textViewThingsRowAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/divider" />
+</com.leondroid.demo_app.ui.main.things.ThingsRow>

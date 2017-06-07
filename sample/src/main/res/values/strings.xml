@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Geeny Sdk Sample</string>
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="navigation_item_1">Home</string>
+    <string name="navigation_item_2">Events</string>
+    <string name="starred_string">Starred</string>
+    <string name="inbox_string">Inbox</string>
+    <string name="sent_mail_string">Sent mail</string>
+    <string name="draft_string">Drafts</string>
+    <string name="subheader">Subheader</string>
+    <string name="trash_string">Trash</string>
+    <string name="all_mail_string">All mails</string>
+    <string name="spam_string">Spams</string>
+    <string name="closeDrawer">Navigation View</string>
+    <string name="openDrawer">Navigation View Closed</string>
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">close</string>
+    <string name="label_geeny_profile">Geeny Profile</string>
+    <string name="label_ble_list">BLE Devices</string>
+    <string name="label_mqtt">MQTT</string>
+    <string name="label_broker">Broker</string>
+    <string name="label_routing">Routing</string>
+    <string name="label_cp">Consumer/Producer</string>
+    <string name="label_custom_clients">Custom Clients</string>
+    <string name="label_chart">Chart</string>
+    <string name="app_page">Hosting Application</string>
+    <string name="label_dump">Dump Database</string>
+</resources>

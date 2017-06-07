@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundLight"
+    android:orientation="vertical">
+
+    <io.geeny.sample.ui.main.clients.ble.common.connection.DetailConnectionLayout
+        android:id="@+id/connectionLayoutChar"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewBleAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Mac" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewBleCharacteristicUUID"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="CharacteristicUUID" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewBleCurrentValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="no value yet"
+        app:label="Current Value" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewBleLastDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="no date yet"
+        android:textStyle="italic"
+        app:label="Last Update" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.view.PagerTitleStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@color/colorPrimary"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:textColor="#FFFFFF" />
+    </android.support.v4.view.ViewPager>
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Name" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Address" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent2"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="Available Gatt Services"
+        android:textColor="@color/primary_text_color"
+        android:textSize="12dp"  />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/divider" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewGeneral"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="4dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:padding="24dp"
+        android:text="Services not loaded yet, connect to device to read available Gatt services"
+        android:textColor="@color/primary_text_color" />
+</LinearLayout>

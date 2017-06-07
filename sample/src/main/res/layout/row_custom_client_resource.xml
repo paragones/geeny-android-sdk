@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.geeny.sample.ui.main.clients.custom.detail.CustomClientResourceRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    android:padding="8dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    app:cardCornerRadius="@dimen/card_view_geent_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewResourceName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/primary_text_color"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/textViewResourceType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/primary_text_color"
+            android:textSize="11dp"
+            android:textStyle="italic" />
+
+        <TextView
+            android:id="@+id/textViewResourceConnectionStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/primary_text_color"
+            android:textSize="11dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+</io.geeny.sample.ui.main.clients.custom.detail.CustomClientResourceRow>

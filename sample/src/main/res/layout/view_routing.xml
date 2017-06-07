@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:id="@+id/containerRoutingConsumer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewConsumerRouteStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/primary_text_color"
+            android:textStyle="bold" />
+
+        <io.geeny.sample.ui.main.clients.common.routing.consume.RoutingCreateConsumerLayout
+            android:id="@+id/routingCreateConsumerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <io.geeny.sample.ui.main.clients.common.routing.RoutingControlLayout
+            android:id="@+id/routingControlLayoutConsumer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/routingDivider"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_margin="8dp"
+        android:background="@color/divider" />
+
+    <LinearLayout
+        android:id="@+id/containerRoutingProducer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewProducerRouteStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="8dp"
+            android:ellipsize="marquee"
+            android:gravity="center"
+            android:marqueeRepeatLimit="marquee_forever"
+            android:padding="8dp"
+            android:singleLine="true"
+            android:textColor="@color/primary_text_color"
+            android:textStyle="bold" />
+
+
+        <io.geeny.sample.ui.main.clients.common.routing.produce.RoutingCreateProducerLayout
+            android:id="@+id/routingCreateProducerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <io.geeny.sample.ui.main.clients.common.routing.RoutingControlLayout
+            android:id="@+id/routingControlLayoutProducer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+    </LinearLayout>
+</merge>

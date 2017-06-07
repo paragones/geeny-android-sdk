@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.geeny.sample.ui.main.clients.ble.detail.general.view.CharacteristicsServiceView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/row_item">
+
+    <View
+        android:id="@+id/dividerCharacteristicTop"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="top"
+        android:background="@color/divider"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="32dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewGattCharacteristicsUUID"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textColor="@color/primary_text_color" />
+
+        <TextView
+            android:id="@+id/textViewGattCharacteristicsProperties"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:singleLine="true"
+            android:ellipsize="marquee"
+            android:textColor="@color/secondary_text_color"
+            android:textSize="9dp"
+            android:textStyle="italic" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_gravity="end|center_vertical"
+        android:src="@drawable/chevron_right"
+        android:layout_marginRight="8dp"/>
+    <View
+        android:id="@+id/dividerCharacteristicLast"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:background="@color/divider" />
+
+</io.geeny.sample.ui.main.clients.ble.detail.general.view.CharacteristicsServiceView>

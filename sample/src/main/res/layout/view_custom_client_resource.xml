@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.geeny.sample.ui.main.clients.custom.slot.CustomClientResourceView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <io.geeny.sample.ui.main.clients.common.routing.RoutingLayout
+        android:id="@+id/routingLayoutCustom"
+        android:layout_width="match_parent"
+        android:layout_margin="8dp"
+        android:layout_height="wrap_content"/>
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledResourceClientIdentifier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Client Identifier" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labelResourceIdentifier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Resource Identifier" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledResourceCurrentValue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Current Value" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledResourceLastUpdate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="no date yet"
+        android:textStyle="italic"
+        app:label="Last Update" />
+
+    <io.geeny.sample.ui.main.clients.ble.characterstics.views.operatorviews.ResourceLayout
+        android:id="@+id/resourceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</io.geeny.sample.ui.main.clients.custom.slot.CustomClientResourceView>

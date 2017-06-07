@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/buttonCreateProduceRouteFanOut"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/GeenyButton"
+        android:layout_marginTop="8dp"
+        android:text="Fan Out" />
+
+    <TextView
+        android:id="@+id/buttonCreateProduceRouteDismissOnRead"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/GeenyButton"
+        android:layout_marginTop="8dp"
+        android:text="Dismiss On Read" />
+
+    <TextView
+        android:id="@+id/buttonCreateProduceRouteOverwrite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/GeenyButton"
+        android:layout_marginTop="8dp"
+        android:text="Overwrite" />
+</merge>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <io.geeny.sample.ui.main.clients.ble.common.connection.MqttConnectionLayout
+        android:id="@+id/mqttConnectionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewMqttDetailServerUri"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Server Uri" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/textViewMqttDetailClientId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Client Id" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/editTextMqttTopic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/primary_text_color"
+            android:layout_marginRight="8dp"/>
+
+        <TextView
+            android:id="@+id/buttonCreateMqttTopic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginLeft="8dp"
+            style="@style/GeenyButton"
+            android:text="Create"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewTopicFormLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textSize="14dp"
+        android:textColor="@color/primary_text_color"
+        android:padding="8dp" />
+
+    <io.geeny.sample.ui.main.clients.common.routing.RoutingLayout
+        android:id="@+id/routingLayoutForm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
+    <TextView
+        android:id="@+id/textViewHasCertificateLoaded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="no certificate loaded yet"
+        android:textColor="@color/primary_text_color"/>
+</LinearLayout>

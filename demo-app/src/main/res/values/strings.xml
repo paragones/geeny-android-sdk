@@ -1,0 +1,8 @@
+<slots>
+    <string name="app_name">Geeny Demo App</string>
+    <string name="title_sign_in">Please log in into Geeny first</string>
+    <string name="button_sign_in">Sign In</string>
+    <string name="logout">Sign Out</string>
+    <string name="scan">Scan</string>
+    <string name="stop_scan">stop scan</string>
+</slots>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cardview_light_background"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/buttonStartStopRouteDetail"
+            style="@style/GeenyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/buttonDeleteRouteDetail"
+            style="@style/GeenyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledViewRouteDetailTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Topic" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledViewRouteDetailType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Type" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledViewRouteDetailId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="Id" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledViewRouteDetailClientId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="ClientId" />
+
+    <io.geeny.sample.ui.common.views.LabeledTextView
+        android:id="@+id/labeledViewRouteDetailClientResourceId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:label="ClientResourceId" />
+
+</LinearLayout>

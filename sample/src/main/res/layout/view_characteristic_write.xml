@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<io.geeny.sample.ui.main.clients.ble.characterstics.views.operatorviews.WritePropertyView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    android:layout_margin="8dp"
+    app:cardCornerRadius="@dimen/card_view_geent_radius">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:text="Write"
+            android:textColor="@color/primary_text_color"
+            android:textSize="11dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/divider" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp">
+
+            <EditText
+                android:id="@+id/editCharTextWrite"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/primary_text_color"
+                android:layout_gravity="bottom"
+                android:inputType="numberDecimal" />
+
+            <TextView
+                android:id="@+id/buttonCharWrite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Send"
+                style="@style/GeenyButton"
+                android:layout_marginTop="8dp" />
+        </LinearLayout>
+    </LinearLayout>
+</io.geeny.sample.ui.main.clients.ble.characterstics.views.operatorviews.WritePropertyView>

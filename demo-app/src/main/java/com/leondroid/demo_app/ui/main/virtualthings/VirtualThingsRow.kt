@@ -1,13 +1,14 @@
-package com.leondroid.demo_app.ui.main.things
+package com.leondroid.demo_app.ui.main.virtualthings
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import io.geeny.sdk.clients.ble.BleClient
+import io.geeny.sdk.clients.common.Client
 import kotlinx.android.synthetic.main.row_things.view.*
 
-class ThingsRow : FrameLayout {
+class VirtualThingsRow : FrameLayout {
 
     constructor(context: Context) : super(context) {
         init(null)
@@ -25,13 +26,7 @@ class ThingsRow : FrameLayout {
 
     }
 
-    fun bind(client: BleClient) {
-        imageViewGeenyLogo.visibility = if (client.isGeenyDevice()) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-
+    fun bind(client: Client) {
         textViewThingsRowTitle.text = client.name()
         textViewThingsRowAddress.text = client.address()
     }

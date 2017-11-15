@@ -8,7 +8,9 @@ import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 
-open class BleClientPool(private val context: Context, private val bleScanner: BleScanner) {
+open class BleClientPool(
+        private val context: Context,
+        private val bleScanner: BleScanner) {
 
     private val map: MutableMap<String, BleClient> = HashMap()
     private fun toList(): List<BleClient> = map.toList().map { it.second }
@@ -29,11 +31,10 @@ open class BleClientPool(private val context: Context, private val bleScanner: B
     open fun getOrCreate(address: String): Observable<BleClient> =
             get(address)
                     .switchIfEmpty (
-                      //  GLog.d(TAG, "Creating remote device for $address")
                         bleScanner.createRemoteDevice(address)
                                 .map {
                                     GLog.d(TAG, "remote device $address created....")
-                                    val client = BleClient(address, GeenyBleDevice(it, 0, kotlin.ByteArray(0)))
+                                    val client = BleClient(address, it)
                                     map[address] = client
                                     client
                                 }

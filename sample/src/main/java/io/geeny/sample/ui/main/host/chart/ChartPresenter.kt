@@ -23,7 +23,7 @@ class ChartPresenter(val sdk: GeenySdk, val ioScheduler: Scheduler, val mainSche
     fun loadResources() {
         add(
                 sdk.clients.custom.getClient(CustomClientPool.APP_CLIENT_ADDRESS)
-                        .flatMap { it.resources() }
+                        .flatMap { it.slots() }
                         .subscribeOn(ioScheduler)
                         .observeOn(mainScheduler)
                         .subscribe(

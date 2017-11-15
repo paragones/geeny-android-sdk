@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.geeny.sample.R
 import io.geeny.sample.ui.common.presenter.BaseFragment
+import io.geeny.sdk.clients.common.Client
 import io.geeny.sdk.clients.custom.AppClient
 import kotlinx.android.synthetic.main.fragment_custom_client_list.*
 
@@ -47,7 +48,7 @@ class CustomClientListFragment : BaseFragment(), CustomClientListView, CustomCli
     }
 
 
-    override fun showClients(clients: List<AppClient>) {
+    override fun showClients(clients: List<Client>) {
         adapter.data = clients
     }
 
@@ -85,14 +86,14 @@ class CustomClientListAdapter : RecyclerView.Adapter<CustomClientListAdapter.Vie
 
     override fun getItemCount(): Int = data?.size ?: 0
 
-    var data: List<AppClient>? = null
+    var data: List<Client>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     class ViewHolder(private val row: CustomClientListRow) : RecyclerView.ViewHolder(row) {
-        fun bind(client: AppClient) {
+        fun bind(client: Client) {
             row.bindConnection(client)
         }
     }

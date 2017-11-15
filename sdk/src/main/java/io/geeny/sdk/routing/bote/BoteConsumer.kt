@@ -6,7 +6,7 @@ import java.util.concurrent.Executors
 
 abstract class BoteConsumer(val broker: BoteBroker,
                             val topic: String,
-                            private val delay: Long = 100L,
+                            private val delay: Long = 2000L,
                             private val executorService: ExecutorService = Executors.newSingleThreadExecutor()) : Runnable {
 
 

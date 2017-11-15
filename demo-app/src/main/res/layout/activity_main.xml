@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.leondroid.demo_app.ui.main.MainActivity">
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/containerSelectors"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <TextView
+            android:id="@+id/buttonBleThings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/GeenySelector"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Ble Things"/>
+
+        <TextView
+            android:id="@+id/buttonVirtualThings"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            style="@style/GeenySelector"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:text="Virtual Things"/>
+        
+    </LinearLayout>
+
 
     <FrameLayout
         android:id="@+id/containerMain"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

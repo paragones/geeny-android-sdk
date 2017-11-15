@@ -35,7 +35,7 @@ class ResourceNotifyView : CardView, ResourceView {
         val app = GatewayApp.from(context)
 
 
-        disposable = client.resourceState(slot.id())
+        disposable = client.slotState(slot.id())
                 .observeOn(app.component.mainScheduler)
                 .subscribe { state ->
                     when (state) {

@@ -43,6 +43,7 @@ class MainActivity :
         BleClientListFragment.Container,
         BleClientFragment.Container,
         RouterListFragment.Container,
+
         SidebarFragment.Container {
 
     var toggle: ActionBarDrawerToggle? = null

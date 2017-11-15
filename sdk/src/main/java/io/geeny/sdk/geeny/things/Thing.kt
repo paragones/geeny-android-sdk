@@ -3,23 +3,33 @@ package io.geeny.sdk.geeny.things
 import io.geeny.sdk.geeny.cloud.api.repos.*
 import java.util.*
 
-data class BleThing(
-        val deviceInfo: DeviceInfo,
-        val thing: Thing
+data class Thing(
+        val localThingInfo: LocalThingInfo,
+        val cloudThingInfo: CloudThingInfo
 ) {
     override fun toString(): String =
             StringBuilder()
-                    .append(deviceInfo.toString())
+                    .append(localThingInfo.toString())
                     .append("\n")
-                    .append(thing.toString())
+                    .append(cloudThingInfo.toString())
                     .toString()
-
 }
 
 
-val emptyBleThing = BleThing(emptyDeviceInfo(), emptyThing())
 
-fun emptyDeviceInfo(): DeviceInfo = DeviceInfo("", "", -1, UUID.randomUUID(), UUID.randomUUID())
+data class LocalThingInfo(
+        val deviceName: String,
+        val address: String,
+        val protocolVersion: Int,
+        val serialNumber: String,
+        val thingTypeId: String
+) {
+    fun isEmpty(): Boolean = address.isEmpty()
+}
+
+val emptyBleThing = Thing(emptyDeviceInfo(), emptyThing())
+
+fun emptyDeviceInfo(): LocalThingInfo = LocalThingInfo("", "", -1, "", "")
 
 class TheThingType(val thingType: ThingType, val resources: List<TheResource>)
 

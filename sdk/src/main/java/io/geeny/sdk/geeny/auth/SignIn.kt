@@ -1,5 +1,6 @@
 package io.geeny.sdk.geeny.auth
 
+import io.geeny.sdk.GeenyConfiguration
 import io.geeny.sdk.common.netwok.Http
 import io.geeny.sdk.common.netwok.NetworkClient
 import io.geeny.sdk.common.netwok.Request
@@ -11,7 +12,7 @@ import java.nio.charset.Charset
 
 object SignIn {
 
-    fun signInWithCredentials(credentials: Credentials, networkClient: NetworkClient): Observable<AuthToken> =
+    fun signInWithCredentials(credentials: Credentials, networkClient: NetworkClient, configuration: GeenyConfiguration): Observable<AuthToken> =
             Observable.just(credentials)
                     .flatMap {
                         val body = credentials.toJSON().toString()
@@ -22,7 +23,7 @@ object SignIn {
                                 .method(Http.METHOD_POST)
                                 .accept(Http.MEDIA_TYPE_APPLICATION_JSON)
                                 .body(requestBody)
-                                .url("https://connect.geeny.io/auth/login/")
+                                .url(configuration.environment.geenyConnectBaseUrl())
                                 .build()
                         val response = networkClient.execute(request)
 

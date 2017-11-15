@@ -4,11 +4,12 @@ import android.content.Context
 import io.geeny.sdk.clients.ble.BleClient
 import io.geeny.sdk.common.ConnectionState
 import io.geeny.sdk.common.GLog
-import io.geeny.sdk.common.toHex
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
+import io.geeny.sdk.common.toHex 
 import io.geeny.sdk.geeny.flow.GeenyFlow
-import io.geeny.sdk.geeny.things.BleThing
+import io.geeny.sdk.geeny.things.LocalThingInfo
+import io.geeny.sdk.geeny.things.Thing
 import io.geeny.sdk.routing.router.types.Route
+import io.geeny.sdk.routing.router.types.RouteType
 import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
@@ -23,7 +24,7 @@ class BleGateway(
     private var client: BleClient? = null
     private var compositeDisposable: CompositeDisposable? = null
     var callback: Callback? = null
-    private var deviceInfo: DeviceInfo? = null
+    private var deviceInfo: LocalThingInfo? = null
 
     private fun add(disposable: Disposable) {
         compositeDisposable?.add(disposable)
@@ -80,7 +81,7 @@ class BleGateway(
                                         deviceInfo = it
 
                                         callback?.progress(false)
-                                        callback?.onDeviceInfoLoad(it)
+                                        callback?.onLocalThingInfoLoad(it)
                                     }
                                 },
                                 showError()
@@ -91,15 +92,15 @@ class BleGateway(
         callback?.onError(it)
     }
 
-    private fun loadThing(deviceInfo: DeviceInfo) {
+    private fun loadThing(deviceInfo: LocalThingInfo) {
         add(
                 sdk.geeny.getThing(deviceInfo.serialNumber.toString())
                         .subscribeOn(ioScheduler)
                         .observeOn(mainScheduler)
                         .subscribe(
                                 {
-                                    GLog.d(TAG, "Loaded thing $it")
-                                    if (it.thing.isEmpty) {
+                                    GLog.d(TAG, "Loaded cloudThingInfo $it")
+                                    if (it.cloudThingInfo.isEmpty) {
                                         callback?.onDeviceIsNotRegisteredYet()
                                     } else {
                                         loadFlows(it)
@@ -110,9 +111,9 @@ class BleGateway(
         )
     }
 
-    private fun loadFlows(bleThing: BleThing) {
+    private fun loadFlows(thing: Thing) {
         add(
-                sdk.geeny.getFlows(bleThing)
+                sdk.geeny.getFlows(thing, RouteType.BLE)
                         .subscribeOn(ioScheduler)
                         .observeOn(mainScheduler)
                         .subscribe(
@@ -200,7 +201,7 @@ class BleGateway(
     interface Callback {
         fun onClientLoaded(client: BleClient)
         fun onConnectionStateHasChanged(connectionState: ConnectionState)
-        fun onDeviceInfoLoad(deviceInfo: DeviceInfo)
+        fun onLocalThingInfoLoad(deviceInfo: LocalThingInfo)
         fun onDeviceIsNotRegisteredYet()
         fun onFlowsLoaded(flows: List<GeenyFlow>)
         fun onRouteConnectionStatusHasChanged(flow: GeenyFlow, route: Route, status: ConnectionState)

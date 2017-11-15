@@ -1,4 +1,4 @@
-package com.leondroid.demo_app.ui.main.things
+package com.leondroid.demo_app.ui.main.blethings
 
 import io.geeny.sample.ui.common.presenter.BasePresenter
 import io.geeny.sample.ui.common.presenter.BaseView

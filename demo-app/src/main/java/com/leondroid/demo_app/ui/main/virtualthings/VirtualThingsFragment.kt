@@ -1,4 +1,4 @@
-package com.leondroid.demo_app.ui.main.things
+package com.leondroid.demo_app.ui.main.virtualthings
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
@@ -8,20 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.leondroid.demo_app.R
 import io.geeny.sample.ui.common.presenter.BaseFragment
-import io.geeny.sdk.clients.ble.BleClient
+import io.geeny.sdk.clients.common.Client
 import kotlinx.android.synthetic.main.fragment_things.*
 
-class ThingsFragment : BaseFragment(), ThingsAdapter.Callback, ThingsView {
+class VirtualThingsFragment : BaseFragment(), VirtualThingsAdapter.Callback, VirtualThingsView {
 
-    private lateinit var presenter: ThingsPresenter
-    private lateinit var adapter: ThingsAdapter
+    private lateinit var presenter: VirtualThingsPresenter
+    private lateinit var adapter: VirtualThingsAdapter
 
     override fun layout(): Int = R.layout.fragment_things
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        presenter = ThingsPresenter(sdk(), app().ioScheduler, app().mainScheduler)
-        adapter = ThingsAdapter()
+        presenter = VirtualThingsPresenter(sdk(), app().ioScheduler, app().mainScheduler)
+        adapter = VirtualThingsAdapter()
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -44,29 +44,25 @@ class ThingsFragment : BaseFragment(), ThingsAdapter.Callback, ThingsView {
         super.onStop()
     }
 
-    override fun onThingsLoaded(clients: List<BleClient>) {
+    override fun onThingsLoaded(clients: List<Client>) {
         adapter.data = clients
     }
 
-    override fun onThingClicked(client: BleClient) {
-        if(client.isGeenyDevice()) {
-            (activity as Container).onThingClicked(client.address())
-        } else {
-            toast("Can't open a non geeny device")
-        }
+    override fun onVirtualThingClicked(client: Client) {
+        (activity as Container).onVirtualThingClicked(client.address())
     }
 
     interface Container {
-        fun onThingClicked(address: String)
+        fun onVirtualThingClicked(address: String)
     }
 
     companion object {
-        val TAG = ThingsFragment::class.java.simpleName
+        val TAG = VirtualThingsFragment::class.java.simpleName
     }
 }
 
-class ThingsAdapter : RecyclerView.Adapter<ThingsAdapter.ThingsViewHolder>() {
-    var data: List<BleClient>? = null
+class VirtualThingsAdapter : RecyclerView.Adapter<VirtualThingsAdapter.VirtualThingsViewHolder>() {
+    var data: List<Client>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -74,27 +70,27 @@ class ThingsAdapter : RecyclerView.Adapter<ThingsAdapter.ThingsViewHolder>() {
 
     var callback: Callback? = null
 
-    override fun onBindViewHolder(holder: ThingsViewHolder?, position: Int) {
+    override fun onBindViewHolder(holder: VirtualThingsViewHolder?, position: Int) {
         holder?.bind(data!![position])
         holder?.row?.setOnClickListener {
-            callback?.onThingClicked(data!![position])
+            callback?.onVirtualThingClicked(data!![position])
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ThingsViewHolder {
-        val row = LayoutInflater.from(parent?.context).inflate(R.layout.row_things, parent, false) as ThingsRow
-        return ThingsViewHolder(row)
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): VirtualThingsViewHolder {
+        val row = LayoutInflater.from(parent?.context).inflate(R.layout.row_virutal_things, parent, false) as VirtualThingsRow
+        return VirtualThingsViewHolder(row)
     }
 
     override fun getItemCount(): Int = data?.size ?: 0
 
-    class ThingsViewHolder(val row: ThingsRow) : RecyclerView.ViewHolder(row) {
-        fun bind(client: BleClient) {
+    class VirtualThingsViewHolder(val row: VirtualThingsRow) : RecyclerView.ViewHolder(row) {
+        fun bind(client: Client) {
             row.bind(client)
         }
     }
 
     interface Callback {
-        fun onThingClicked(client: BleClient)
+        fun onVirtualThingClicked(client: Client)
     }
 }

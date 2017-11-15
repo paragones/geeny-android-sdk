@@ -57,13 +57,13 @@ class SignInPresenter(
     }
 
     fun onSignIn(email: String, password: String) {
-//        val c = Credentials(email, password)
-//        if(c.isValid()) {
-//
-//        } else{
-//            view?.toast("Credentials not complete!")
-//        }
-        val c = Credentials("lenny@geeny.io", "qqqqqqqq")
+        val c = Credentials(email, password)
+        if(c.isValid()) {
+
+        } else{
+            view?.toast("Credentials not complete!")
+        }
+
 
         add(
                 sdk.geeny.auth.signInWithCredentials(c)

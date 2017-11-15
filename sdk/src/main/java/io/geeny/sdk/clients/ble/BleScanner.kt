@@ -6,33 +6,40 @@ import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothManager
 import android.content.Context
 import android.content.Intent
-import io.geeny.sdk.clients.ThingInfo
-import io.geeny.sdk.clients.emptyThingInfo
 import io.geeny.sdk.common.GLog
+import io.geeny.sdk.geeny.LocalThingInfoRepository
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import io.reactivex.Observable
+import io.reactivex.functions.BiFunction
 import io.reactivex.subjects.PublishSubject
 
 
-class BleScanner(val context: Context) {
+class BleScanner(val context: Context, private val localThingInfoRepository: LocalThingInfoRepository) {
 
     val adapter: BluetoothAdapter = (context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
-
     val scanner: PublishSubject<GeenyBleDevice> = PublishSubject.create()
-
-    val updatedList: PublishSubject<List<BluetoothDevice>> = PublishSubject.create()
 
     private val callback: BluetoothAdapter.LeScanCallback = BluetoothAdapter.LeScanCallback { device, rssi, scanRecord ->
         if (device!!.name != null) {
-            val gbd = GeenyBleDevice(device, rssi, scanRecord)
+            val deviceInfo: LocalThingInfo= localThingInfoRepository.getByAddress(device.address)
+            val gbd = GeenyBleDevice(device, rssi, scanRecord, deviceInfo)
             scanner.onNext(gbd)
         }
     }
 
-    fun createRemoteDevice(address: String): Observable<BluetoothDevice> = Observable.create { subscriber ->
+
+    fun createRemoteDevice(address: String): Observable<GeenyBleDevice> = Observable.create<BluetoothDevice> { subscriber ->
         val device = adapter.getRemoteDevice(address)
         GLog.d(TAG, "Device loaded: " + device)
         subscriber.onNext(device)
         subscriber.onComplete()
+    }.flatMap { bluetoothDevice ->
+        Observable.zip<BluetoothDevice, LocalThingInfo, GeenyBleDevice>(
+                Observable.just(bluetoothDevice),
+                localThingInfoRepository.loadByAddress(address),
+                BiFunction { device, deviceInfo ->
+                    GeenyBleDevice(device, 0, kotlin.ByteArray(0), deviceInfo)
+                })
     }
 
     var availableDevice: MutableMap<String, GeenyBleDevice> = mutableMapOf()
@@ -44,10 +51,6 @@ class BleScanner(val context: Context) {
     fun enableBluetooth(activity: Activity) {
         val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
         activity.startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT)
-    }
-
-    fun gatt(peripheralId: String): ThingInfo {
-        return emptyThingInfo()
     }
 
     fun startScan() {

@@ -43,7 +43,7 @@ class GeenyMqttClient(val mqttConfig: MqttConfig, context: Context) {
         }
 
         connectionStream.set(ConnectionState.DISCONNECTED)
-        client = MqttAndroidClient(context, mqttConfig.serverUri, "80633fca-b32d-4473-9dc4-f85921ff419f")
+        client = MqttAndroidClient(context, mqttConfig.serverUri, mqttConfig.clientId)
         client.setCallback(object : MqttCallback {
             override fun messageArrived(topic: String?, message: MqttMessage?) {
                 GLog.d(TAG, "message arrived: " + message)

@@ -1,4 +1,4 @@
-<slots>
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -22,6 +22,19 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="GeenySelector">
+        <item name="android:background">@drawable/geeny_selector</item>
+        <item name="android:textSize">12dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">24dp</item>
+        <item name="android:paddingRight">24dp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textColor">@drawable/geeny_selector_text</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 
     <style name="TitleTextStyle">
@@ -29,4 +42,4 @@
         <item name="android:gravity">center</item>
         <item name="android:textColor">@color/primaryTextColor</item>
     </style>
-</slots>
+</resources>

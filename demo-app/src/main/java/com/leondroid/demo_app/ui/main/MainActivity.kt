@@ -11,19 +11,25 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import com.leondroid.demo_app.R
 import com.leondroid.demo_app.ui.launch.LaunchActivity
-import com.leondroid.demo_app.ui.main.thing.ThingFragment
-import com.leondroid.demo_app.ui.main.things.ThingsFragment
+import com.leondroid.demo_app.ui.main.blething.ThingFragment
+import com.leondroid.demo_app.ui.main.blethings.BleThingsFragment
+import com.leondroid.demo_app.ui.main.virtualthing.VirtualThingFragment
+import com.leondroid.demo_app.ui.main.virtualthings.VirtualThingsFragment
 import io.geeny.sample.ui.common.presenter.BaseActivity
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(),
-        ThingsFragment.Container,
+        BleThingsFragment.Container,
+        VirtualThingsFragment.Container,
         MainView {
 
     private lateinit var presenter: MainPresenter
 
     private var isScanning = false
+    private var bleSelected: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,8 +38,11 @@ class MainActivity : BaseActivity(),
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                    .add(R.id.containerMain, ThingsFragment(), ThingsFragment.TAG)
+                    .add(R.id.containerMain, BleThingsFragment(), BleThingsFragment.TAG)
                     .commit()
+
+            buttonBleThings.isSelected = true
+            bleSelected = true
         }
     }
 
@@ -77,9 +86,34 @@ class MainActivity : BaseActivity(),
         super.onStart()
         presenter.attach(this)
         checkLocationPermission()
+
+
+        buttonBleThings.setOnClickListener {
+            if (!bleSelected) {
+                bleSelected = true
+                transactionWithAnimation()
+                        .replace(R.id.containerMain, BleThingsFragment(), BleThingsFragment.TAG)
+                        .commit()
+                buttonBleThings.isSelected = true
+                buttonVirtualThings.isSelected = false
+            }
+        }
+
+        buttonVirtualThings.setOnClickListener {
+            if (bleSelected) {
+                bleSelected = false
+                transactionWithAnimation()
+                        .replace(R.id.containerMain, VirtualThingsFragment(), VirtualThingsFragment.TAG)
+                        .commit()
+                buttonBleThings.isSelected = false
+                buttonVirtualThings.isSelected = true
+            }
+        }
     }
 
     override fun onStop() {
+        buttonBleThings.setOnClickListener {}
+        buttonVirtualThings.setOnClickListener {}
         presenter.detach()
         super.onStop()
     }
@@ -93,12 +127,17 @@ class MainActivity : BaseActivity(),
     private fun updateDrawerStateNoAnimate(isSubFragment: Boolean) {
         if (isSubFragment) {
             supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            containerSelectors.visibility = ViewGroup.GONE
         } else {
             supportActionBar!!.setHomeButtonEnabled(true)
             supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+            containerSelectors.visibility = ViewGroup.VISIBLE
         }
     }
 
+    override fun onVirtualThingClicked(address: String) {
+        openSubFragment(VirtualThingFragment.newInstance(address), VirtualThingFragment.TAG)
+    }
 
     override fun onThingClicked(address: String) {
         openSubFragment(ThingFragment.newInstance(address), ThingFragment.TAG)

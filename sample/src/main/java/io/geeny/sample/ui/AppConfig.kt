@@ -13,5 +13,6 @@ class AppConfig {
         val APP_LOG_RESOURCE_ID = "resource.id.sink.log"
         val APP_TAG: String = "GATEWAY_APP"
         val DISCO_SOURCE_RESOURCE_ID: String = "resource.id.source.disco"
+        val DANCE_SOURCE_RESOURCE_ID: String = "resource.id.source.dance"
     }
 }

@@ -6,7 +6,7 @@ import io.geeny.sdk.SdkTearDownResult
 import io.geeny.sdk.clients.mqtt.MqttConfig
 import io.geeny.sdk.common.GLog
 import io.geeny.sdk.common.KeyValueStore
-import io.geeny.sdk.geeny.things.BleThing
+import io.geeny.sdk.geeny.things.Thing
 import io.geeny.sdk.geeny.things.ResourceMethod
 import io.geeny.sdk.geeny.things.TheResource
 import io.geeny.sdk.geeny.things.TheThingType
@@ -26,34 +26,34 @@ class Flower(
         private val router: Router) {
 
 
-    fun getOrCreateRoutes(bleThing: BleThing, thingType: TheThingType): Observable<List<GeenyFlow>> =
+    fun getOrCreateRoutes(thing: Thing, thingType: TheThingType, routeType: RouteType): Observable<List<GeenyFlow>> =
             Observable.fromIterable(thingType.resources)
                     .flatMap {
-                        getOrCreateRoutes(bleThing, it)
+                        getOrCreateRoutes(thing, it,routeType)
                     }
                     .toList().toObservable()
                     .doOnNext { GLog.d(TAG, "Loaded ${it.size} flows.") }
 
 
-    private fun getOrCreateRoutes(bleThing: BleThing, theResource: TheResource): Observable<GeenyFlow> =
+    private fun getOrCreateRoutes(thing: Thing, theResource: TheResource, routeType: RouteType): Observable<GeenyFlow> =
 
             when (theResource.method) {
 
                 ResourceMethod.PUB -> {
                     GLog.d(TAG, "Creating producer route for ${theResource.uri}")
                     val route = RouteInfo(
-                            RouteType.BLE,
+                            routeType,
                             Direction.PRODUCER,
                             theResource.uri.toLowerCase(),
-                            bleThing.deviceInfo.address,
+                            thing.localThingInfo.address,
                             theResource.uri.toLowerCase()
                     )
                     router.get(route.identifier())
                             .switchIfEmpty(router.create(
-                                    RouteType.BLE,
+                                    routeType,
                                     Direction.PRODUCER,
                                     theResource.uri.toLowerCase(),
-                                    bleThing.deviceInfo.address,
+                                    thing.localThingInfo.address,
                                     theResource.uri.toLowerCase(),
                                     TopicJournalType.DISMISS_ON_READ
                             ))
@@ -64,7 +64,7 @@ class Flower(
                                         router.getOrCreate(RouteType.MQTT,
                                                 Direction.CONSUMER,
                                                 theResource.uri.toLowerCase(),
-                                                MqttConfig(configuration.environment.geenyMqttBrokerUrl(), bleThing.thing.id, false).id(),
+                                                MqttConfig(configuration.environment.geenyMqttBrokerUrl(), thing.cloudThingInfo.id, false).id(),
                                                 theResource.uri.toLowerCase()
                                         ),
                                         BiFunction<Route, Route, GeenyFlow> { producerRoute, consumerRoute -> GeenyFlow(listOf(producerRoute, consumerRoute)) }
@@ -76,17 +76,17 @@ class Flower(
                     router.getOrCreate(RouteType.MQTT,
                             Direction.PRODUCER,
                             theResource.uri.toLowerCase(),
-                            MqttConfig(configuration.environment.geenyMqttBrokerUrl(), bleThing.thing.id, false).id(),
+                            MqttConfig(configuration.environment.geenyMqttBrokerUrl(), thing.cloudThingInfo.id, false).id(),
                             theResource.uri.toLowerCase(),
                             TopicJournalType.OVERWRITE
                     ).flatMap {
                         GLog.d(TAG, "Creating consumer route for ${theResource.uri}")
                         Observable.zip(
                                 Observable.just(it),
-                                router.getOrCreate(RouteType.BLE,
+                                router.getOrCreate(routeType,
                                         Direction.CONSUMER,
                                         theResource.uri.toLowerCase(),
-                                        bleThing.deviceInfo.address,
+                                        thing.localThingInfo.address,
                                         theResource.uri.toLowerCase()
                                 ),
                                 BiFunction<Route, Route, GeenyFlow> { producerRoute, consumerRoute -> GeenyFlow(listOf(producerRoute, consumerRoute)) }
@@ -108,4 +108,5 @@ class Flower(
     companion object {
         val TAG = Flower::class.java.simpleName
     }
+
 }

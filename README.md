@@ -20,7 +20,7 @@ This SDK is still under development and is currently released as Beta. Although 
 ### Glossary:
 
 * **Thing**: A connected device that can send and receive data - a fitness tracker or a smart lamp.
-* **Non-IP-enabled Thing**: A thing which does not connect directly to the Internet by design (for example, it does not have a WIFI module built in). These Things are usually low-powered.
+* **Non-IP-enabled Thing**: A cloudThingInfo which does not connect directly to the Internet by design (for example, it does not have a WIFI module built in). These Things are usually low-powered.
 * **Geeny-enabled Thing**: A Thing that is compliant with the Geeny Thing specs.
 * **ThingInfo**: Metadata of a Thing. Represents all metadata of a Thing, including its identifier, the characteristics and Geeny Thing Info.
 * **Virtual Thing**: a Thing that is fully managed by a developer and connected to the Geeny SDK manually - e.g. a HomeKit appliance or HealthKit Data
@@ -206,7 +206,7 @@ The information a DeviceInfo provides:
     DeviceInfo(
         deviceName,                  // (String) value representing the name of the device,
         address,                     // (String) value representing the ble mac address
-        protocolVersion,             // (Int) value representing the protocol version this thing communicates
+        protocolVersion,             // (Int) value representing the protocol version this cloudThingInfo communicates
         serialNumber,                // (UUID) value representing the serial number
         thingTypeId                 // (UUID) value representing the thingtype registerd at Geeny
     )
@@ -217,20 +217,20 @@ The information a DeviceInfo provides:
 Once you have a `DeviceInfo`, you can register the Thing on the Geeny Cloud and retrieve a `BleThing` (a combination of device and cloud data):
 
 ```kotlin 
-    sdk.geeny.register(deviceInfo: DeviceInfo)
+    sdk.geeny.register(clientInfo: DeviceInfo)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(doSomethingwith(bleThing))
+                .subscribe(doSomethingwith(thing))
 ```
 
 At any later time you can get this information back with the serialNumber:
 
 ```kotlin 
     serialnumber = getSerialNumberFromYourPersistentToolOfYourChoice 
-    sdk.geeny.getThing(serialNumber)
+    sdk.geeny.get(serialNumber)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
-                .subscribe(doSomethingWith(bleThing))
+                .subscribe(doSomethingWith(thing))
 ```
 
 **Routing**
@@ -240,7 +240,7 @@ With the `BleThing` you can get a list `GeenyFlow` that contains all the routes,
 
 ```kotlin 
     serialnumber = getSerialNumberFromYourPersistentSourceOfYourChoice 
-    sdk.geeny.getThing(serialNumber)
+    sdk.geeny.get(serialNumber)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe(doSomethingWith(geenyFlow))
@@ -298,7 +298,7 @@ KOTLIN
     interface Callback {
         fun onClientLoaded(client: BleClient)
         fun onConnectionStateHasChanged(connectionState: ConnectionState)
-        fun onDeviceInfoLoad(deviceInfo: DeviceInfo)
+        fun onDeviceInfoLoad(clientInfo: DeviceInfo)
         fun onDeviceIsNotRegisteredYet()
         fun onFlowsLoaded(flows: List<GeenyFlow>)
         fun onRouteConnectionStatusHasChanged(flow: GeenyFlow, route: Route, status: ConnectionState)
@@ -314,7 +314,7 @@ JAVA
     interface Callback {
         void onClientLoaded(BleClient client)
         void onConnectionStateHasChanged(ConnectionState connectionState)
-        void onDeviceInfoLoad(DeviceInfo deviceInfo)
+        void onDeviceInfoLoad(DeviceInfo clientInfo)
         void onDeviceIsNotRegisteredYet()
         void onFlowsLoaded(List<GeenyFlow> flows)
         void onRouteConnectionStatusHasChanged(GeenyFlow flow, Route route, ConnectionState status)
@@ -370,9 +370,11 @@ The documentation can also be generated locally using ... (to come).
 
 *  Background networking support and documentation
 *  Automatic reconnection to registered Things
-*  Complete unit test coverage of public methods
+*  Complete unit test coverage of public methods 
+*  Examples for using HealthKit and HomeKit devices as Things
 *  Repeated scan and characteristic discovery should cancel previous tasks
 *  Offline handling when the Thing itself or the Geeny API are unreacheable
+
 
 ## License
 

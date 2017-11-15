@@ -41,7 +41,7 @@ class RouterListPresenter(
     }
 
     fun startAll(context: Context) {
-        StartAllRoutes().startAll(router, context)
+        StartAllRoutes.startAll(router, context)
                 .subscribeOn(ioScheduler)
                 .observeOn(mainScheduler)
                 .subscribe {

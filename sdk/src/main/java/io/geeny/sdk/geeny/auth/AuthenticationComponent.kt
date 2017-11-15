@@ -37,7 +37,7 @@ class AuthenticationComponent(
     fun isSignedIn(): Observable<Boolean> = Observable.just(state.value!!).map { it == State.SIGNED_IN }
 
     fun signInWithCredentials(credentials: Credentials): Observable<State> =
-            SignIn.signInWithCredentials(credentials, networkClient)
+            SignIn.signInWithCredentials(credentials, networkClient, configuration)
                     .filter { !it.isEmpty() }
                     .flatMap { tokenManager.onSignedIn(it) }
                     .map { State.SIGNED_IN }
@@ -58,6 +58,9 @@ class AuthenticationComponent(
         it.onComplete()
     }
 
+    /*
+        This is the correct way to do it (OAuth2) but it is not supported by backend....
+     */
     fun getAuthToken(code: String): Observable<String> = Observable.create {
 
         val url = URL(configuration.environment.geenyConnectBaseUrl())
@@ -135,9 +138,4 @@ class AuthenticationComponent(
         SIGN_OUT_INTENT,
         SIGNED_OUT
     }
-
-    companion object {
-
-    }
-
 }

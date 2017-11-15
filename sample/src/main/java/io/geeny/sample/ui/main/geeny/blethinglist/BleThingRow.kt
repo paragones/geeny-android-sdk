@@ -3,7 +3,7 @@ package io.geeny.sample.ui.main.geeny.blethinglist
 import android.content.Context
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import kotlinx.android.synthetic.main.row_ble_thing.view.*
 
 class BleThingRow : CardView {
@@ -25,8 +25,8 @@ class BleThingRow : CardView {
 
     }
 
-    fun bind(deviceInfo: DeviceInfo) {
+    fun bind(deviceInfo: LocalThingInfo) {
         labeledBleName.content = deviceInfo.deviceName
-        labeledBleThingType.content = deviceInfo.thingTypeId.toString()
+        labeledBleThingType.content = deviceInfo.thingTypeId
     }
 }

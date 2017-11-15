@@ -3,8 +3,8 @@ package io.geeny.sdk.geeny.cloud.api.endpoints
 import io.geeny.sdk.geeny.cloud.api.repos.*
 
 
-fun thingResponse2Thing(t: ThingResponse): Thing {
-    return Thing(
+fun thingResponse2Thing(t: ThingResponse): CloudThingInfo {
+    return CloudThingInfo(
             t.id,
             t.name,
             t.serial_number,

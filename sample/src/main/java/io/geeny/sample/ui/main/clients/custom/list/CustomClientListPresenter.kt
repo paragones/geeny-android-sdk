@@ -3,6 +3,7 @@ package io.geeny.sample.ui.main.clients.custom.list
 import io.geeny.sample.ui.common.presenter.BasePresenter
 import io.geeny.sample.ui.common.presenter.BaseView
 import io.geeny.sdk.GeenySdk
+import io.geeny.sdk.clients.common.Client
 import io.geeny.sdk.clients.custom.AppClient
 import io.reactivex.Scheduler
 
@@ -25,6 +26,6 @@ class CustomClientListPresenter(
 }
 
 interface CustomClientListView : BaseView {
-    fun showClients(clients: List<AppClient>)
+    fun showClients(clients: List<Client>)
 
 }

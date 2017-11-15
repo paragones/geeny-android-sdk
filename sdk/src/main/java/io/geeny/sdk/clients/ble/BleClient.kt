@@ -5,7 +5,7 @@ import android.content.Context
 import android.util.Log
 import io.geeny.sdk.clients.common.Stream
 import io.geeny.sdk.common.*
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
@@ -24,10 +24,10 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
     private val characteristics: MutableMap<String, BluetoothGattCharacteristic> = HashMap()
 
     private val connectionStream: Stream<ConnectionState> = Stream()
-    private val deviceInfoStream: Stream<DeviceInfo> = Stream()
+    private val deviceInfoStream: Stream<LocalThingInfo> = Stream()
 
     fun connection(): Observable<ConnectionState> = connectionStream.connect()
-    fun geenyInformation(): Observable<DeviceInfo> = deviceInfoStream.connect()
+    fun geenyInformation(): Observable<LocalThingInfo> = deviceInfoStream.connect()
 
     fun services(): Observable<List<BluetoothGattService>> = Observable.merge(Observable.just(gattService), services)
     private var gattService: List<BluetoothGattService> = ArrayList()
@@ -38,7 +38,7 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
 
     fun device(): BluetoothDevice? = gbd.device
     fun address() = address
-    fun name() = gbd.name
+    fun name() = gbd.name ?: "unnamed"
 
     var gatt: BluetoothGatt? = null
 
@@ -51,6 +51,9 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
 
     init {
         connectionStream.set(ConnectionState.DISCONNECTED)
+        if (!gbd.deviceInfo.isEmpty()) {
+            deviceInfoStream.set(gbd.deviceInfo)
+        }
     }
 
 
@@ -136,7 +139,7 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
     private fun onReceivedGeenyCharacteristicPayload(result: GattResult) {
         val hex = result.currentValue.toHex()
         GLog.d(TAG, "onReceivedGeenyCharacteristicPayload:\n $hex")
-        val serviceInformation = extractDeviceInformation(name() ?: "no name specified", address(), result.currentValue)
+        val serviceInformation = extractLocalThingInformation(name() ?: "no name specified", address(), result.currentValue)
         GLog.d(TAG, "extracted $serviceInformation")
         deviceInfoStream.set(serviceInformation)
     }
@@ -212,7 +215,7 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
 
                 if (geeny_c != null) {
                     GLog.d(TAG, "Reading ${geeny_c}")
-                    read(geeny_c!!)
+                    read(geeny_c)
                 }
             }
             services.onNext(gatt.services)
@@ -241,9 +244,9 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
         private val TAG = BleClient::class.java.simpleName
         private val CHARACTERISTIC_UPDATE_NOTIFICATION_DESCRIPTOR_UUID = UUID.fromString("00002902-0000-1000-8000-00805f9b34fb")
 
-        fun extractDeviceInformation(name: String,
-                                     address: String,
-                                     bytes: ByteArray): DeviceInfo {
+        fun extractLocalThingInformation(name: String,
+                                         address: String,
+                                         bytes: ByteArray): LocalThingInfo {
             val protocol = bytes.sliceArray(IntRange(0, 1))
             val serialNumber = bytes.sliceArray(IntRange(2, 17))
             val thingType = bytes.sliceArray(IntRange(18, 33))
@@ -251,15 +254,13 @@ open class BleClient(val address: String, var gbd: GeenyBleDevice) : BluetoothGa
             serialNumber.reverse()
             thingType.reverse()
 
-            // NASTY HACK
-            val hackyThingType = UUID.fromString("d63f6ad9-1cd0-4288-89cb-0dfe07bfead9")
 
-            return DeviceInfo(
+            return LocalThingInfo(
                     name,
                     address,
                     TypeConverters.bytesToIntDynamic(protocol, ByteOrder.LITTLE_ENDIAN),
-                    serialNumber.toUUID(),
-                    hackyThingType//thingType.toUUID()
+                    serialNumber.toUUID().toString(),
+                    thingType.toUUID().toString()
             )
         }
     }

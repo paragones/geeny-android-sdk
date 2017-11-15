@@ -18,7 +18,7 @@ class ClientsComponent(
         private val context: Context) {
 
     val ble: BleComponent by lazy {
-        BleComponent(configuration, context)
+        BleComponent(configuration, keyValueStore, context)
     }
 
     val mqtt: MqttComponent by lazy {

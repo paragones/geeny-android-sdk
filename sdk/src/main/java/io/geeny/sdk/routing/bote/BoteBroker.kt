@@ -49,7 +49,7 @@ open class BoteBroker(keyValueStore: KeyValueStore) {
 
     fun send(topic: String, payload: ByteArray): BoteResponse {
         if (topics.containsKey(topic)) {
-            val value = TypeConverters.bytesToInt(payload)
+            val value = TypeConverters.bytesToIntDynamic(payload)
             GLog.d(TAG, "Sending $topic $value")
             val ret = topics[topic]!!.send(BoteRequest(MessageType.CAST, payload, null))
             GLog.d(TAG, "Sent $topic")
@@ -64,7 +64,7 @@ open class BoteBroker(keyValueStore: KeyValueStore) {
         if (topics.containsKey(topic)) {
             GLog.d(TAG, "Reading $topic")
             val ret = topics[topic]!!.send(BoteRequest(MessageType.READ, payload = null, lastIterator = iterator))
-            val value = if (ret.payload != null) TypeConverters.bytesToInt(ret.payload!!) else -1
+            val value = if (ret.payload != null) TypeConverters.bytesToIntDynamic(ret.payload!!) else -1
             GLog.d(TAG, "Read ${value}")
             return ret
         }

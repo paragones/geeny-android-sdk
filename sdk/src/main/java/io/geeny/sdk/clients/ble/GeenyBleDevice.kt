@@ -1,12 +1,14 @@
 package io.geeny.sdk.clients.ble
 
 import android.bluetooth.BluetoothDevice
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import java.util.*
 
 class GeenyBleDevice(
         val device: BluetoothDevice,
-        val rssi: Int,
-        val scanRecord: ByteArray) {
+        private val rssi: Int,
+        private val scanRecord: ByteArray,
+        val deviceInfo: LocalThingInfo) {
 
     val serviceId: String
     val isGeenyDevice: Boolean
@@ -15,11 +17,13 @@ class GeenyBleDevice(
 
     init {
         serviceId = if (scanRecord.isNotEmpty()) {
-            GeenyBleDevice.getServiceUUID(GeenyBleDevice.parseRecord(scanRecord))
+            val result = GeenyBleDevice.parseRecord(scanRecord)
+            GeenyBleDevice.getServiceUUID(result)
         } else {
             ""
         }
-        isGeenyDevice = serviceId == GEENY_SERVICE_ID
+        val hasLocalThingInfoLoaded = deviceInfo.isEmpty()
+        isGeenyDevice = serviceId == GEENY_SERVICE_ID || !hasLocalThingInfoLoaded
         name = device.name
         address = device.address
     }

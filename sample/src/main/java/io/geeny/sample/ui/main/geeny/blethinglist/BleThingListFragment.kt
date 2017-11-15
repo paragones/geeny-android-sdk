@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import io.geeny.sample.R
 import io.geeny.sample.ui.common.presenter.BaseFragment
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import kotlinx.android.synthetic.main.fragment_ble_thing_list.*
 
 class BleThingListFragment : BaseFragment(), BleThingListView {
@@ -44,7 +44,7 @@ class BleThingListFragment : BaseFragment(), BleThingListView {
     }
 
 
-    override fun showList(list: List<DeviceInfo>) {
+    override fun showList(list: List<LocalThingInfo>) {
         adapter.data = list
     }
 
@@ -56,7 +56,7 @@ class BleThingListFragment : BaseFragment(), BleThingListView {
 }
 
 class BleThingAdapter : RecyclerView.Adapter<BleThingAdapter.BleThingViewHolder>() {
-    var data: List<DeviceInfo>? = null
+    var data: List<LocalThingInfo>? = null
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -75,7 +75,7 @@ class BleThingAdapter : RecyclerView.Adapter<BleThingAdapter.BleThingViewHolder>
 
 
     class BleThingViewHolder(val bleThingRow: BleThingRow) : RecyclerView.ViewHolder(bleThingRow) {
-        fun bind(deviceInfo: DeviceInfo) {
+        fun bind(deviceInfo: LocalThingInfo) {
             bleThingRow.bind(deviceInfo)
         }
 

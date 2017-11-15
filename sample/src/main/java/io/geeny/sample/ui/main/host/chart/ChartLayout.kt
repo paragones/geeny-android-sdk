@@ -70,9 +70,9 @@ class ChartLayout : View {
 
 
         for (i in 1 until chartData!!.size()) {
-            val x = XToPx(i, w)
-            val y = YToPx(chartData!!.y(i), h)
-            path.lineTo(x, y)
+            val xx = XToPx(i, w)
+            val yy = YToPx(chartData!!.y(i), h)
+            path.lineTo(xx, yy)
         }
 
         canvas.drawPath(path, paint)

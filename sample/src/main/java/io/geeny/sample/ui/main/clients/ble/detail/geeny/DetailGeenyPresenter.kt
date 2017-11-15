@@ -5,10 +5,11 @@ import io.geeny.sample.ui.common.presenter.BaseView
 import io.geeny.sdk.GeenySdk
 import io.geeny.sdk.clients.ble.BleClient
 import io.geeny.sdk.common.GLog
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
 import io.geeny.sdk.geeny.flow.GeenyFlow
-import io.geeny.sdk.geeny.things.BleThing
+import io.geeny.sdk.geeny.things.LocalThingInfo
+import io.geeny.sdk.geeny.things.Thing
 import io.geeny.sdk.geeny.things.emptyBleThing
+import io.geeny.sdk.routing.router.types.RouteType
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 
@@ -32,7 +33,7 @@ class DetailGeenyPresenter(
         )
     }
 
-    private var geenyInformation: DeviceInfo? = null
+    private var geenyInformation: LocalThingInfo? = null
 
     fun onConnectionLoaded(client: BleClient) {
         view?.onConnectionLoaded(client)
@@ -64,7 +65,7 @@ class DetailGeenyPresenter(
                         .subscribe(
                                 {
                                     GLog.d(TAG, "Loaded device $it")
-                                    if (it.deviceInfo.address.isEmpty()) {
+                                    if (it.localThingInfo.address.isEmpty()) {
                                         view?.onDeviceIsUnregistered()
                                     } else {
                                         onDeviceIsRegistered(it)
@@ -76,11 +77,11 @@ class DetailGeenyPresenter(
 
     }
 
-    private fun onDeviceIsRegistered(bleThing: BleThing) {
+    private fun onDeviceIsRegistered(thing: Thing) {
 
-        GLog.i(TAG, "device is registered $bleThing")
+        GLog.i(TAG, "device is registered $thing")
         add(
-                sdk.geeny.getFlows(bleThing)
+                sdk.geeny.getFlows(thing, RouteType.BLE)
                         .doOnSubscribe { GLog.d(TAG, "Subscribing to getFlow") }
                         .doOnError { GLog.d(TAG, it.message!!) }
                         .subscribeOn(ioScheduler)
@@ -115,7 +116,7 @@ class DetailGeenyPresenter(
 
 interface DetailGeenyView : BaseView {
     fun onConnectionLoaded(connection: BleClient)
-    fun publishGeenyInformation(deviceInfo: DeviceInfo)
+    fun publishGeenyInformation(deviceInfo: LocalThingInfo)
     fun onDeviceIsUnregistered()
     fun onFlowLoaded(flows: List<GeenyFlow>)
 }

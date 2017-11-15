@@ -7,7 +7,14 @@ import io.geeny.sdk.routing.router.types.Route
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable
 
-class StartAllRoutes {
+/**
+ * A Helper Usecase to start a group of routes
+ *
+ * This singleton provides a function that helps to start
+ * all routes created on this device.
+ *
+ */
+object StartAllRoutes {
 
     val map: MutableMap<String, Disposable> = HashMap()
 

@@ -12,8 +12,8 @@ import kotlinx.android.synthetic.main.fragment_detail_geeny.view.*
 
 import io.geeny.sample.ui.main.clients.ble.detail.BleClientContainer
 import io.geeny.sdk.common.GLog
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
 import io.geeny.sdk.geeny.flow.GeenyFlow
+import io.geeny.sdk.geeny.things.LocalThingInfo
 
 class DetailGeenyLayout : FrameLayout, DetailGeenyView {
     override fun onFlowLoaded(flows: List<GeenyFlow>) {
@@ -32,12 +32,12 @@ class DetailGeenyLayout : FrameLayout, DetailGeenyView {
         }
     }
 
-    override fun publishGeenyInformation(deviceInfo: DeviceInfo) {
+    override fun publishGeenyInformation(deviceInfo: LocalThingInfo) {
 
         labeledGeenyBleName.content = deviceInfo.deviceName
         labeledGeenyBleProtocol.content = deviceInfo.protocolVersion.toString()
-        labeledGeenyBleSerialNumber.content = deviceInfo.serialNumber.toString()
-        labeledGeenyBleThingType.content = deviceInfo.thingTypeId.toString()
+        labeledGeenyBleSerialNumber.content = deviceInfo.serialNumber
+        labeledGeenyBleThingType.content = deviceInfo.thingTypeId
     }
 
     override fun back() {

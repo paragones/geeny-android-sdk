@@ -19,7 +19,7 @@ class GeenySdk private constructor(private val configuration: GeenyConfiguration
     private val appContext: Context = context.applicationContext
 
     val geeny: GeenyComponent by lazy {
-        GeenyComponent(configuration, keyValueStore, context, clients.mqtt, routing.router)
+        GeenyComponent(configuration, keyValueStore, clients.ble, context, clients.mqtt, routing.router)
     }
 
     val routing: RoutingComponent by lazy {
@@ -36,6 +36,11 @@ class GeenySdk private constructor(private val configuration: GeenyConfiguration
 
     fun getBleGateway(bluetoothAdress: String, mainScheduler: Scheduler): BleGateway {
         return BleGateway(bluetoothAdress, this, mainScheduler)
+    }
+
+
+    fun getVirtualGateway(address: String, mainScheduler: Scheduler): VirtualThingGateway {
+        return VirtualThingGateway(address, this, mainScheduler)
     }
 
     init {

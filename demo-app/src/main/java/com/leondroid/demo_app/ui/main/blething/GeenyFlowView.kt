@@ -1,10 +1,9 @@
-package com.leondroid.demo_app.ui.main.thing
+package com.leondroid.demo_app.ui.main.blething
 
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import com.leondroid.demo_app.DemoApp
 import io.geeny.sdk.common.ConnectionState
 import io.geeny.sdk.common.toHex
 import io.geeny.sdk.geeny.flow.GeenyFlow
@@ -34,7 +33,9 @@ class GeenyFlowView : LinearLayout {
         this.callback = callback
         // put infos
         textViewResourceId.text = flow.startingResourceId()
-        flow.routes.filter {it.info().type == RouteType.BLE}.forEach { textViewFlowTitle.text = "Resource (${it.info().direction})" }
+        flow.routes.filter {it.info().type == RouteType.BLE || it.info().type == RouteType.CUSTOM}.forEach { textViewFlowTitle.text = "Resource (${it.info().direction})" }
+        flow.routes.filter {it.info().type == RouteType.BLE}.forEach { labelSourceType.text = "Ble Status" }
+        flow.routes.filter {it.info().type == RouteType.CUSTOM}.forEach { labelSourceType.text = "Virtual Status" }
 
         buttonTriggerConnect.setOnClickListener {
             this.callback?.start(flow)
@@ -56,6 +57,7 @@ class GeenyFlowView : LinearLayout {
         val statusView = when (route.info().type) {
             RouteType.MQTT -> textViewConnectionStatusMqtt
             RouteType.BLE -> textViewConnectionStatusBle
+            RouteType.CUSTOM -> textViewConnectionStatusBle
             else -> null
         }
 

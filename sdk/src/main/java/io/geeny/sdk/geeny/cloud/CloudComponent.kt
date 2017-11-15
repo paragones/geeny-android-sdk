@@ -20,6 +20,7 @@ import io.geeny.sdk.geeny.cloud.api.repos.resource.ThingTypeJsonConverter
 import io.geeny.sdk.geeny.cloud.api.repos.resource.ThingTypeRepository
 import io.geeny.sdk.geeny.cloud.api.repos.thing.ThingJsonConverter
 import io.geeny.sdk.geeny.cloud.api.repos.thing.ThingRepository
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import io.reactivex.Observable
 import io.reactivex.ObservableSource
 import okhttp3.Interceptor
@@ -68,8 +69,8 @@ class CloudComponent(val configuration: GeenyConfiguration,
 
     val thingRepository: ThingRepository by lazy {
         ThingRepository(
-                object : SimpleCache<Thing>(mutableMapOf()) {
-                    override fun id(t: Thing): String = t.id
+                object : SimpleCache<CloudThingInfo>(mutableMapOf()) {
+                    override fun id(t: CloudThingInfo): String = t.id
                 },
                 ListDisk(keyValueStore, ThingJsonConverter, "THING_LIST_ID"),
                 retrofit.create(ThingEndpoint::class.java))
@@ -103,13 +104,13 @@ class CloudComponent(val configuration: GeenyConfiguration,
 
     fun onInit(sdkInitializationResult: SdkInitializationResult): ObservableSource<SdkInitializationResult> = Observable.just(sdkInitializationResult)
     fun onTearDown(result: SdkTearDownResult): Observable<SdkTearDownResult> = Observable.just(result)
-    fun register(deviceInfo: DeviceInfo): Observable<Thing> =
+    fun register(deviceInfo: LocalThingInfo): Observable<CloudThingInfo> =
             Observable.just(deviceInfo)
                     .map {
                         ThingPostBody(
                                 it.deviceName,
-                                it.serialNumber.toString(),
-                                it.thingTypeId.toString()
+                                it.serialNumber,
+                                it.thingTypeId
                         )
                     }
                     .flatMap { thingRepository.create(it) }

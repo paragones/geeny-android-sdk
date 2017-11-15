@@ -8,10 +8,9 @@ import io.geeny.sdk.clients.mqtt.repository.MqttConfigJsonConverter
 import io.geeny.sdk.clients.mqtt.repository.MqttRepository
 import io.geeny.sdk.common.KeyValueStore
 import io.geeny.sdk.common.ListDisk
-import io.geeny.sdk.geeny.cloud.api.repos.Certificate
 import io.geeny.sdk.geeny.cloud.api.repos.SimpleCache
 import io.geeny.sdk.geeny.cloud.api.repos.certificate.CertificateRepository
-import io.geeny.sdk.geeny.things.BleThing
+import io.geeny.sdk.geeny.things.Thing
 import io.reactivex.Observable
 
 class MqttComponent(
@@ -48,8 +47,8 @@ class MqttComponent(
 
     fun get(serverUri: String): Observable<GeenyMqttClient> = pool.get(serverUri)
 
-    fun create(bleThing: BleThing): Observable<BleThing> =
-            pool.createGeenyClient(bleThing.thing.id, bleThing.thing.certs)
-                    .map { bleThing }
+    fun create(thing: Thing): Observable<Thing> =
+            pool.createGeenyClient(thing.cloudThingInfo.id, thing.cloudThingInfo.certs)
+                    .map { thing }
 
 }

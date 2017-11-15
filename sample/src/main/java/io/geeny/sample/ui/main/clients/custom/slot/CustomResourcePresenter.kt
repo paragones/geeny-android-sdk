@@ -21,7 +21,7 @@ class CustomResourcePresenter(
                         .flatMap {
                             Observable.zip<Client, Slot, Pair<Client, Slot>>(
                                     Observable.just(it),
-                                    it.getResource(resourceId),
+                                    it.getSlot(resourceId),
                                     BiFunction { client, resource -> Pair(client, resource) }
                             )
                         }

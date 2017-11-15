@@ -21,7 +21,7 @@ class CustomClientDetailPresenter(
                         .flatMap {
                             Observable.zip<Client, List<Slot>, Pair<Client, List<Slot>>>(
                                     Observable.just(it),
-                                    it.resources(),
+                                    it.slots(),
                                     BiFunction { client, resourceList ->
                                         Pair(client, resourceList)
                                     })

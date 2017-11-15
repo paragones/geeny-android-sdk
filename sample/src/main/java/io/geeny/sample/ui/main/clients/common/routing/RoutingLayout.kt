@@ -181,7 +181,7 @@ class RoutingLayout : LinearLayout, ConnectionView, RoutingView, RoutingCreateCo
         val app = GatewayApp.from(context)
         presenter = RoutingPresenter(
                 RouteType.MQTT,
-                client.mqttConfig.serverUri,
+                client.mqttConfig.id(),
                 mqttTopic,
                 ResourceType.CHANNEL,
                 app.component.sdk,
@@ -233,27 +233,6 @@ class RoutingLayout : LinearLayout, ConnectionView, RoutingView, RoutingCreateCo
 
     private fun showView(view: View, show: Boolean, animated: Boolean = false) {
         view.visibility = if (show) ViewGroup.VISIBLE else View.GONE
-//        view.visibility = ViewGroup.VISIBLE
-//
-//        val widthSpec = MeasureSpec.makeMeasureSpec(measuredWidth, MeasureSpec.EXACTLY)
-//        val heightSpec = MeasureSpec.makeMeasureSpec(measuredHeight, MeasureSpec.AT_MOST)
-//        view.measure(widthSpec, heightSpec)
-//        val anim = if (show) {
-//            view.layoutParams.height = 0
-//            ValueAnimator.ofInt(0, view.measuredHeight)
-//        } else {
-//            ValueAnimator.ofInt(view.measuredHeight, 0)
-//        }
-//
-//        anim.addUpdateListener { valueAnimator ->
-//            val value = valueAnimator.animatedValue as Int
-//            val layoutParams = view.layoutParams
-//            layoutParams.height = value
-//            view.layoutParams = layoutParams
-//        }
-//
-//        anim.duration = 150
-//        anim.start()
     }
 }
 

@@ -1,4 +1,4 @@
-package com.leondroid.demo_app.ui.main.thing
+package com.leondroid.demo_app.ui.main.blething
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,13 +9,11 @@ import io.geeny.sdk.common.ConnectionState
 import kotlinx.android.synthetic.main.fragment_thing.*
 import android.view.View
 import io.geeny.sdk.BleGateway
-import io.geeny.sdk.geeny.cloud.api.repos.DeviceInfo
 import io.geeny.sdk.geeny.flow.GeenyFlow
+import io.geeny.sdk.geeny.things.LocalThingInfo
 import io.geeny.sdk.routing.router.types.Route
 
 class ThingFragment : BaseFragment(), BleGateway.Callback {
-
-
     private lateinit var gateway: BleGateway
     private var flowViewMap: MutableMap<GeenyFlow, GeenyFlowView> = HashMap()
 
@@ -28,7 +26,7 @@ class ThingFragment : BaseFragment(), BleGateway.Callback {
 
     override fun onStart() {
         super.onStart()
-        setTitle("Thing Info")
+        setTitle("CloudThingInfo Info")
         gateway.attach(this)
 
     }
@@ -56,16 +54,16 @@ class ThingFragment : BaseFragment(), BleGateway.Callback {
             when (connectionState) {
                 ConnectionState.CONNECTED -> gateway.disconnect()
                 ConnectionState.DISCONNECTED -> gateway.connect(context)
-                ConnectionState.CONNECTING -> TODO()
+                ConnectionState.CONNECTING -> {}
             }
         }
     }
 
-    override fun onDeviceInfoLoad(deviceInfo: DeviceInfo) {
-        textViewThingProtocol.text = "Geeny-Native Thing, Protocol v${deviceInfo.protocolVersion}"
-        textViewThingTypeValue.text = deviceInfo.thingTypeId.toString()
-        textViewThingSerialNumber.text = deviceInfo.serialNumber.toString()
-        textViewThingSerialNumberValue.text = deviceInfo.serialNumber.toString()
+    override fun onLocalThingInfoLoad(deviceInfo: LocalThingInfo) {
+        textViewThingProtocol.text = "Geeny-Native CloudThingInfo, Protocol v${deviceInfo.protocolVersion}"
+        textViewThingTypeValue.text = deviceInfo.thingTypeId
+        textViewThingSerialNumber.text = deviceInfo.serialNumber
+        textViewThingSerialNumberValue.text = deviceInfo.serialNumber
         textViewThingSerialNumber.visibility = View.VISIBLE
     }
 

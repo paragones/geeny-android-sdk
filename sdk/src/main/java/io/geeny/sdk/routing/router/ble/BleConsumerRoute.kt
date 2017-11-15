@@ -5,7 +5,9 @@ import android.content.Context
 import io.geeny.sdk.clients.ble.BleClient
 import io.geeny.sdk.clients.common.Stream
 import io.geeny.sdk.common.ConnectionState
+import io.geeny.sdk.common.GLog
 import io.geeny.sdk.common.TypeConverters
+import io.geeny.sdk.common.toHex
 import io.geeny.sdk.routing.bote.BoteBroker
 import io.geeny.sdk.routing.bote.BoteConsumer
 import io.geeny.sdk.routing.bote.topicjournal.BoteResponse
@@ -46,7 +48,7 @@ class BleConsumerRoute(
                         }
                         ConnectionState.DISCONNECTED -> {
                             // TODO think about auto connect strategies
-                            if(isStarted()) {
+                            if (isStarted()) {
                                 isWaitingForConnection = true
                                 stop()
                             }
@@ -115,17 +117,19 @@ class BleConsumerRoute(
 
     override fun onResponse(response: BoteResponse) {
         if (response.messageType != MessageType.READ) {
-
             return
         }
         val payload = response.payload
-        val res = TypeConverters.bytesToInt(payload!!)
-        val array = ByteArray(1)
-        array[0] = if (res > 0) 1 else 0
-        client.write(characteristic!!, array)
+        val res = TypeConverters.bytesToIntDynamic(payload!!)
+        val responsePayload = TypeConverters.intToBytesDynamic(res)
+
+        GLog.d(TAG, responsePayload.toHex(true))
+        client.write(characteristic!!, responsePayload)
     }
 
-    override fun onError(t: Throwable) {
+    override fun onError(t: Throwable) {}
 
+    companion object {
+        val TAG = BleConsumerRoute::class.java.simpleName
     }
 }
